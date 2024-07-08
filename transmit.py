@@ -1,9 +1,9 @@
 import numpy as np
 import sounddevice as sd
-DURATION = 0.1
+DURATION = 0.3
 SAMPLE_RATE = 44100
 FREQUENCIES = {0: 2000, 1: 4000,2:6000}
-SAMPLES_PER_BIT = 10
+SAMPLES_PER_BIT = 6
 
 def generate_sine_wave(frequency, duration, sample_rate=44100):
     """
