@@ -30,10 +30,13 @@ def return_txt_files(directory):
 if __name__ == "__main__":
     # Define the directory path
 
-    directory_path = r"C:\Users\TLP-001\PythonProjects\semester2\sprint\sprint3.0\top_secret"
-    #directory_path = r"C:\Users\Public\Documents\top_secret"
+    fake_directory_path = r"C:\Users\TLP-001\PythonProjects\semester2\sprint\sprint3.0\top_secret"
+    real_directory_path = r"C:\Users\Public\Documents\top_secret"
+    fake_picture_path = r"C:\Users\TLP-001\PythonProjects\semester2\sprint\sprint3.0\top_secret\top_image.jpg"
+    real_picture_path = r"C:\Users\Public\Documents\top_secret\top_image.jpg"
 
-    txt_files = return_txt_files(directory_path)
+    txt_files = return_txt_files(fake_directory_path)
+    txt_files.append(fake_picture_path)
 
     for txt_file in txt_files:
         base = 2
