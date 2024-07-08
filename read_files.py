@@ -1,5 +1,4 @@
 import os
-#hello2
 
 
 def read_txt_files(directory):
