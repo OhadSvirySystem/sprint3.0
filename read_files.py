@@ -1,5 +1,5 @@
 import os
-
+#
 
 def read_txt_files(directory):
     # Check if the specified directory exists
