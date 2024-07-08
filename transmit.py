@@ -15,6 +15,7 @@ def generate_sine_wave(frequency, duration, sample_rate=44100):
     return wave
 
 if __name__ == "__main__":
+    #check
     duration = 0.1  # Duration for each wave segment in seconds
     sample_rate = 44100
 
