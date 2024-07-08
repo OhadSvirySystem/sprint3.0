@@ -3,6 +3,15 @@ import sounddevice as sd
 from scipy.fftpack import fft
 import transmit as tr
 
+from collections import Counter
+
+def most_common_int(lst):
+    if not lst:
+        return None  # Handle the case where the list is empty
+    counter = Counter(lst)
+    most_common = counter.most_common(1)  # Get the most common element and its count
+    return most_common[0][0]  # Return the element itself
+
 def record_wave(duration, sample_rate=44100):
     """
     Record audio from the microphone.
@@ -16,6 +25,19 @@ def record_wave(duration, sample_rate=44100):
     sd.wait()  # Wait until the recording is done
     print("Recording done!")
     return recording.flatten()
+
+def find_first_and_last_sequence(lst, sequence):
+    sequence_length = len(sequence)
+    first_index = None
+    last_index = None
+
+    for i in range(len(lst) - sequence_length + 1):
+        if lst[i:i+sequence_length] == sequence:
+            if first_index is None:
+                first_index = i
+            last_index = i
+
+    return first_index, last_index
 
 def decode_wave(recording, segment_duration, sample_rate=44100):
     """
@@ -52,7 +74,7 @@ if __name__ == "__main__":
     # Parameters
     duration_per_segment = tr.DURATION/tr.SAMPLES_PER_BIT  # Duration for each wave segment in seconds
     sample_rate = tr.SAMPLE_RATE
-    numOfBits = 200  # Number of bits to transmit
+    numOfBits = 40  # Number of bits to transmit
     total_segments = numOfBits*tr.SAMPLES_PER_BIT # Total number of segments in the transmitted data
 
     # Record the incoming signal
@@ -60,11 +82,7 @@ if __name__ == "__main__":
 
     # Decode the recorded wave
     decoded_data = decode_wave(recorded_wave, duration_per_segment, sample_rate)
-    # Find the start signal
-    start_index = decoded_data.index(2)
-
-    # Find the stop signal
-    stop_index = decoded_data.index(2, start_index + 1)
+    start_index,stop_index = find_first_and_last_sequence(decoded_data, [2]*3)
 
     # Extract the bits
     bits = decoded_data[start_index + 1:stop_index]
@@ -73,7 +91,10 @@ if __name__ == "__main__":
     bytes = []
     for i in range(0, len(bits), tr.SAMPLES_PER_BIT):
         byte = bits[i:i+tr.SAMPLES_PER_BIT]
-        bytes.append(byte)
+        bytes.append(most_common_int(byte))
 
     print("Bytes:", bytes)
     print("Decoded data:", decoded_data)
+
+
+
