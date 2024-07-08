@@ -38,10 +38,13 @@ def decode_wave(recording, segment_duration, sample_rate=44100):
         # Get the peak frequency
         peak_freq = abs(freqs[np.argmax(np.abs(segment_fft))])
         
-        if peak_freq > (tr.FREQUENCIES[0]+tr.FREQUENCIES[1])/2:  # Compare with the average of the two frequencies
+        if peak_freq < (tr.FREQUENCIES[0]+tr.FREQUENCIES[1])/2:  # Compare with the average of the two frequencies
+            data.append(0)
+        elif peak_freq < (tr.FREQUENCIES[1]+tr.FREQUENCIES[2])/2:
             data.append(1)
         else:
-            data.append(0)
+            data.append(2)
+            
     
     return data
 
@@ -49,7 +52,7 @@ if __name__ == "__main__":
     # Parameters
     duration_per_segment = tr.DURATION/tr.SAMPLES_PER_BIT  # Duration for each wave segment in seconds
     sample_rate = tr.SAMPLE_RATE
-    numOfBits = 24  # Number of bits to transmit
+    numOfBits = 200  # Number of bits to transmit
     total_segments = numOfBits*tr.SAMPLES_PER_BIT # Total number of segments in the transmitted data
 
     # Record the incoming signal
@@ -57,4 +60,20 @@ if __name__ == "__main__":
 
     # Decode the recorded wave
     decoded_data = decode_wave(recorded_wave, duration_per_segment, sample_rate)
+    # Find the start signal
+    start_index = decoded_data.index(2)
+
+    # Find the stop signal
+    stop_index = decoded_data.index(2, start_index + 1)
+
+    # Extract the bits
+    bits = decoded_data[start_index + 1:stop_index]
+
+    # Convert the bits to bytes
+    bytes = []
+    for i in range(0, len(bits), tr.SAMPLES_PER_BIT):
+        byte = bits[i:i+tr.SAMPLES_PER_BIT]
+        bytes.append(byte)
+
+    print("Bytes:", bytes)
     print("Decoded data:", decoded_data)
