@@ -1,5 +1,6 @@
 import cv2
 from pyzbar.pyzbar import decode
+import only_leave_screen
 
 def decode_qr_code(frame):
     """
@@ -48,4 +49,6 @@ def process_video(file_path):
 
 if __name__ == "__main__":
     video_file_path = "littlePrinceQR.mp4"  # Replace with your video file path
-    process_video(video_file_path)
+    new_file_path = 'cropped_video.mp4'
+    only_leave_screen.crop_video(video_file_path, new_file_path)
+    process_video(new_file_path)

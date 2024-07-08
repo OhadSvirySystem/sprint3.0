@@ -12,7 +12,7 @@ def most_common_int(lst):
     most_common = counter.most_common(1)  # Get the most common element and its count
     return most_common[0][0]  # Return the element itself
 
-def record_wave(duration, sample_rate=44100):
+def record_wave(duration, sample_rate=tr.SAMPLE_RATE):
     """
     Record audio from the microphone.
 
