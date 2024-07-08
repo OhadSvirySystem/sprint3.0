@@ -25,7 +25,7 @@ def display_qr_codes(text_list):
         cv2.setWindowProperty('QR Code', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         
         cv2.imshow('QR Code', img)
-        cv2.waitKey(100)  # Display each QR code for 1 second
+        cv2.waitKey(500)  # Display each QR code for 1 second
 
     cv2.destroyAllWindows()
 
