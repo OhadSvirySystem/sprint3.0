@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def text_to_numpy_array(input_file):
+def text_to_numpy_array(input_file, base):
     # Read the text file
     with open(input_file, 'r') as file:
         text = file.read()
@@ -10,9 +10,9 @@ def text_to_numpy_array(input_file):
     ascii_values = [ord(char) for char in text]
 
     # Create a NumPy array from the ASCII values
-    array = np.array(ascii_values, dtype=int)
+    np_array = np.array([np.base_repr(value, base) for value in ascii_values])
 
-    return array
+    return np_array
 
 
 
