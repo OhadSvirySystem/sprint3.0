@@ -21,7 +21,7 @@ def generate_sine_wave(frequency, duration, sample_rate=44100):
 if __name__ == "__main__":
     startSignal = [2]*5
     data = np.array([0, 1, 1, 1, 0, 0, 0, 1, 0, 1,0,1,0,0,0,1,0,0,1,0,0,0,0,1])
-    data = [0,1]*30
+    data = [0,1]*5
     data = startSignal + data + startSignal
     print("Data to transmit:", data)
     print("length of data:", len(data))
