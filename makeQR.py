@@ -62,8 +62,6 @@ if __name__ == "__main__":
     charsInQR = 100 
     text = read_string_from_file("omri1.txt")
     if text:
-        text = " " * 2 * charsInQR + text
         text_list = [text[i:i+charsInQR] for i in range(0, len(text), charsInQR)]
-        display_colored_screen(2000,(0, 0, 255))
         display_colored_screen(2000,(0, 255, 0))
         display_qr_codes(text_list)

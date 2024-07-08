@@ -7,8 +7,8 @@ def detect_screen_boundaries(frame):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     # Define the range for green color in HSV
-    lower_green = np.array([-35, 70, 70])
-    upper_green = np.array([35, 255, 255])
+    lower_green = np.array([45, 70, 70])
+    upper_green = np.array([100, 255, 255])
 
     # Create a mask that captures areas with the green color
     mask = cv2.inRange(hsv, lower_green, upper_green)
