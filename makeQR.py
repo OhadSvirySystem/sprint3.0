@@ -19,16 +19,33 @@ def display_qr_codes(text_list):
     for index, text in enumerate(text_list):
         generate_qr_code(text, index)
         img = cv2.imread(f'qr_code_{index}.png')
+
+        # Create a fullscreen window
+        cv2.namedWindow('QR Code', cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty('QR Code', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        
         cv2.imshow('QR Code', img)
-        cv2.waitKey(1000)  # Display each QR code for 1 second
+        cv2.waitKey(500)  # Display each QR code for 1 second
+
     cv2.destroyAllWindows()
 
+def read_string_from_file(file_path):
+    """
+    Read a string from a text file and return it.
+
+    :param file_path: Path to the text file.
+    :return: String read from the text file.
+    """
+    try:
+        with open(file_path, 'r') as file:
+            return file.read().strip()
+    except FileNotFoundError:
+        print(f"Error: The file {file_path} was not found.")
+        return None
+
 if __name__ == "__main__":
-    text_list = [
-        "Ensure proper lighting and a stable video feed to maximize the accuracy of QR code detection.Adjust the display duration (cv2.waitKey(1000)) and capture frame rate as needed based on the performance of your setup.You may want to implement additional error handling and synchronization mechanisms for ",
-        "חכמנלחגמנךלזחמהנךלחבזמהנףזמסהנדםןגעחמנםזןגעצמפצגזמע,פדגעמפםהנחד",
-        "Transfer text using QR codes.",
-        "OpenAI GPT-4",
-        "End of messages."
-    ]
-    display_qr_codes(text_list)
+    charsInQR = 200 
+    text = read_string_from_file("The Little Prince.txt")
+    if text:
+        text_list = [text[i:i+charsInQR] for i in range(0, len(text), charsInQR)]
+        display_qr_codes(text_list)

@@ -1,6 +1,5 @@
 import cv2
 from pyzbar.pyzbar import decode
-import argparse
 
 def decode_qr_code(frame):
     """
@@ -14,13 +13,15 @@ def decode_qr_code(frame):
 
 def process_video(file_path):
     """
-    Process the video file to extract and print text from QR codes.
+    Process the video file to extract and print unique text from QR codes in order.
     """
     cap = cv2.VideoCapture(file_path)
-
     if not cap.isOpened():
         print(f"Error: Could not open video file {file_path}")
         return
+
+    seen_texts = set()
+    ordered_texts = []
 
     while True:
         ret, frame = cap.read()
@@ -29,7 +30,9 @@ def process_video(file_path):
 
         texts = decode_qr_code(frame)
         for text in texts:
-            print("Decoded Text:", text)
+            if text not in seen_texts:
+                seen_texts.add(text)
+                ordered_texts.append(text)
 
         cv2.imshow('Video Feed', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -38,8 +41,11 @@ def process_video(file_path):
     cap.release()
     cv2.destroyAllWindows()
 
+    # Print unique decoded texts in the order they appeared
+    print("Unique decoded texts in order:")
+    for text in ordered_texts:
+        print(text)
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Process video to extract text from QR codes.")
-    parser.add_argument('file_path', type=str, help='Path to the video file.')
-    args = parser.parse_args()
-    process_video(args.file_path)
+    video_file_path = "littlePrinceQR.mp4"  # Replace with your video file path
+    process_video(video_file_path)
