@@ -1,8 +1,9 @@
 import os
-from txt_to_binary import text_to_numpy_array
+from txt_to_base import text_to_numpy_array
+from base_to_txt import numpy_array_to_text
 
 
-def read_txt_files(directory):
+def return_txt_files(directory):
     # Check if the specified directory exists
     if not os.path.exists(directory):
         print(f"The directory {directory} does not exist.")
@@ -21,23 +22,23 @@ def read_txt_files(directory):
         return
 
     # Read and print the contents of each .txt file
-    for file in txt_files:
-        file_path = os.path.join(directory, file)
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-            print(f"Contents of {file}:\n{content}")
+    return txt_files
 
 
 if __name__ == "__main__":
     # Define the directory path
 
-    directory_path = r"C:\Users\TLP-001\PythonProjects\semester2\sprint"
-    input_file = 'output.txt'
+    directory_path = r"C:\Users\TLP-001\PythonProjects\semester2\sprint\sprint3.0"
+    txt_files = return_txt_files(directory_path)
+
     #directory_path = r"C:\Users\Public\Documents\top_secret"
 
-    # Call the function to read .txt files from the specified directory
-    read_txt_files(directory_path)
+    for txt_file in txt_files:
+        base = 21
 
-    array = text_to_numpy_array(input_file)
-    print(array)
+        np_array = text_to_numpy_array(txt_file, base)
+        print(np_array)
+
+        text = numpy_array_to_text(np_array, base)
+        print(text)
 
