@@ -22,10 +22,10 @@ def display_qr_codes(text_list):
 
         # Create a fullscreen window
         cv2.namedWindow('QR Code', cv2.WND_PROP_FULLSCREEN)
-        cv2.setWindowProperty('QR Code', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         
-        cv2.imshow('QR Code', img)
-        cv2.waitKey(500)  # Display each QR code for 1 second
+        cv2.imshow('QR Code', img,)
+        cv2.setWindowProperty('QR Code', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.waitKey(2000)  # Display each QR code for 1 second
 
     cv2.destroyAllWindows()
 
@@ -46,6 +46,7 @@ def read_string_from_file(file_path):
 if __name__ == "__main__":
     charsInQR = 200 
     text = read_string_from_file("The Little Prince.txt")
+    text = text[:500]
     if text:
         text_list = [text[i:i+charsInQR] for i in range(0, len(text), charsInQR)]
         display_qr_codes(text_list)
