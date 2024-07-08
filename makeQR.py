@@ -23,6 +23,8 @@ def display_qr_codes(text_list):
 
         # Create a fullscreen window
         cv2.namedWindow('QR Code', cv2.WND_PROP_FULLSCREEN)
+        
+        cv2.imshow('QR Code', img,)
         cv2.setWindowProperty('QR Code', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
         # Create a black background image
