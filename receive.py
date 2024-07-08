@@ -47,9 +47,10 @@ def decode_wave(recording, segment_duration, sample_rate=44100):
 
 if __name__ == "__main__":
     # Parameters
-    duration_per_segment = tr.DURATION/5  # Duration for each wave segment in seconds
+    duration_per_segment = tr.DURATION/tr.SAMPLES_PER_BIT  # Duration for each wave segment in seconds
     sample_rate = tr.SAMPLE_RATE
-    total_segments = 100  # Total number of segments in the transmitted data
+    numOfBits = 24  # Number of bits to transmit
+    total_segments = numOfBits*tr.SAMPLES_PER_BIT # Total number of segments in the transmitted data
 
     # Record the incoming signal
     recorded_wave = record_wave(total_segments * duration_per_segment, sample_rate)
