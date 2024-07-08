@@ -42,20 +42,20 @@ def read_string_from_file(file_path):
     except FileNotFoundError:
         print(f"Error: The file {file_path} was not found.")
         return None
-def display_red_screen():
+def display_colored_screen(time,color = (0, 0, 255)):
     """
     Display a red screen using OpenCV.
     """
     # Create a red screen
     red_screen = np.zeros((1080, 1920, 3), np.uint8)
-    red_screen[:] = (0, 0, 255)
+    red_screen[:] = color
 
     # Create a fullscreen window
     cv2.namedWindow('Red Screen', cv2.WND_PROP_FULLSCREEN)
     cv2.setWindowProperty('Red Screen', cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
 
     cv2.imshow('Red Screen', red_screen)
-    cv2.waitKey(3000)  # Display the red screen for 3 seconds
+    cv2.waitKey(time)  # Display the red screen for 3 seconds
 
     cv2.destroyAllWindows()
 if __name__ == "__main__":
@@ -64,5 +64,6 @@ if __name__ == "__main__":
     if text:
         text = " " * 2 * charsInQR + text
         text_list = [text[i:i+charsInQR] for i in range(0, len(text), charsInQR)]
-        display_red_screen()
+        display_colored_screen(2000,(0, 0, 255))
+        display_colored_screen(2000,(0, 255, 0))
         display_qr_codes(text_list)
