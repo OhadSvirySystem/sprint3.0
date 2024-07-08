@@ -1,6 +1,7 @@
 import numpy as np
 import sounddevice as sd
 from scipy.fftpack import fft
+import transmit as tr
 
 def record_wave(duration, sample_rate=44100):
     """
@@ -37,7 +38,7 @@ def decode_wave(recording, segment_duration, sample_rate=44100):
         # Get the peak frequency
         peak_freq = abs(freqs[np.argmax(np.abs(segment_fft))])
         
-        if peak_freq > 5500:  # Threshold between 3000 and 4000
+        if peak_freq > (tr.FREQUENCIES[0]+tr.FREQUENCIES[1])/2:  # Compare with the average of the two frequencies
             data.append(1)
         else:
             data.append(0)
@@ -46,8 +47,8 @@ def decode_wave(recording, segment_duration, sample_rate=44100):
 
 if __name__ == "__main__":
     # Parameters
-    duration_per_segment = 0.1  # Duration for each wave segment in seconds
-    sample_rate = 44100
+    duration_per_segment = tr.DURATION/5  # Duration for each wave segment in seconds
+    sample_rate = tr.SAMPLE_RATE
     total_segments = 100  # Total number of segments in the transmitted data
 
     # Record the incoming signal

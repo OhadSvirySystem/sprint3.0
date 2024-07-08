@@ -1,5 +1,8 @@
 import numpy as np
 import sounddevice as sd
+DURATION = 0.1
+SAMPLE_RATE = 44100
+FREQUENCIES = {0: 3000, 1: 4000}
 
 def generate_sine_wave(frequency, duration, sample_rate=44100):
     """
@@ -15,18 +18,14 @@ def generate_sine_wave(frequency, duration, sample_rate=44100):
     return wave
 
 if __name__ == "__main__":
-    #check
-    duration = 0.1  # Duration for each wave segment in seconds
-    sample_rate = 44100
 
     data = np.array([0, 1, 1, 1, 0, 0, 0, 1, 0, 1,0,1,0,0,0,1,0,0,1,0,0,0,0,1])
-    frequencies = {0: 3000, 1: 4000}
 
     # Pre-generate all sine waves and concatenate them
-    sine_waves = np.concatenate([generate_sine_wave(frequencies[val], duration, sample_rate) for val in data])
+    sine_waves = np.concatenate([generate_sine_wave(FREQUENCIES[val], DURATION, SAMPLE_RATE) for val in data])
 
     # Play the concatenated wave
-    sd.play(sine_waves, samplerate=sample_rate)
+    sd.play(sine_waves, samplerate=SAMPLE_RATE)
     sd.wait()  # Wait until the sound has finished playing
 
     print("Done playing the wave!")
