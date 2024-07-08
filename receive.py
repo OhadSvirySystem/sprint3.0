@@ -38,10 +38,13 @@ def decode_wave(recording, segment_duration, sample_rate=44100):
         # Get the peak frequency
         peak_freq = abs(freqs[np.argmax(np.abs(segment_fft))])
         
-        if peak_freq > (tr.FREQUENCIES[0]+tr.FREQUENCIES[1])/2:  # Compare with the average of the two frequencies
+        if peak_freq < (tr.FREQUENCIES[0]+tr.FREQUENCIES[1])/2:  # Compare with the average of the two frequencies
+            data.append(0)
+        elif peak_freq < (tr.FREQUENCIES[1]+tr.FREQUENCIES[2])/2:
             data.append(1)
         else:
-            data.append(0)
+            data.append(2)
+            
     
     return data
 

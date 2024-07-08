@@ -2,7 +2,7 @@ import numpy as np
 import sounddevice as sd
 DURATION = 0.1
 SAMPLE_RATE = 44100
-FREQUENCIES = {0: 3000, 1: 4000}
+FREQUENCIES = {0: 2000, 1: 4000,2:6000}
 SAMPLES_PER_BIT = 10
 
 def generate_sine_wave(frequency, duration, sample_rate=44100):
@@ -19,9 +19,10 @@ def generate_sine_wave(frequency, duration, sample_rate=44100):
     return wave
 
 if __name__ == "__main__":
-
+    startSignal = [2]*5
     data = np.array([0, 1, 1, 1, 0, 0, 0, 1, 0, 1,0,1,0,0,0,1,0,0,1,0,0,0,0,1])
     data = [0,1]*30
+    data = startSignal + data + startSignal
     print("Data to transmit:", data)
     print("length of data:", len(data))
     # Pre-generate all sine waves and concatenate them
