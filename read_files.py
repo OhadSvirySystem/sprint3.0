@@ -1,4 +1,5 @@
 import os
+from txt_to_binary import text_to_numpy_array
 
 
 def read_txt_files(directory):
@@ -31,8 +32,12 @@ if __name__ == "__main__":
     # Define the directory path
 
     directory_path = r"C:\Users\TLP-001\PythonProjects\semester2\sprint"
+    input_file = 'output.txt'
     #directory_path = r"C:\Users\Public\Documents\top_secret"
 
     # Call the function to read .txt files from the specified directory
     read_txt_files(directory_path)
+
+    array = text_to_numpy_array(input_file)
+    print(array)
 
